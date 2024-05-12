@@ -4,7 +4,7 @@ from pathlib import Path
 import eyed3
 
 
-def set_comments(mp3_file, comments: str):
+def set_comments(mp3_file, comments: str) -> None:
     """
     Helper function to set the comments field on a given MP3 file.
     """
@@ -21,7 +21,7 @@ def get_comments(mp3_file) -> str | None:
     return None if comments is None else comments.text
 
 
-def adjust_metadata(path: Path, comments: str, genre: str):
+def adjust_metadata(path: Path, comments: str, genre: str) -> None:
     """
     Adjusts the metadata of the given MP3 file,
     in case it is not already defined.

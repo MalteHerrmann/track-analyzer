@@ -6,13 +6,11 @@ from PyQt5.QtWidgets import (
     QApplication,
     QMainWindow,
     QWidget,
-    QHBoxLayout,
     QVBoxLayout,
-    QLineEdit,
-    QLabel,
     QPushButton,
-    QFileDialog,
 )
+
+from gui.file_dialog import FileDialog
 
 
 class MainWindow(QMainWindow):
@@ -22,7 +20,6 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.file_entry: QLineEdit
 
         self.setWindowTitle("DJ Tracks Analyzer Tool")
         self.create_widgets()
@@ -38,50 +35,20 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
         main_widget.setLayout(layout)
 
-        file_dialog_widget = self.create_file_dialog_widget("File")
+        file_dialog_widget = FileDialog("")
         layout.addWidget(file_dialog_widget)
 
-        button = QPushButton("Analyze Tracks")
+        button = QPushButton("Load Track")
         layout.addWidget(button)
 
-        button.clicked.connect(self.set_track_label)
+        button.clicked.connect(lambda x: self.load_track(file_dialog_widget.file))
 
-    def create_file_dialog_widget(self, title: str):
-        """
-        Creates the collection of widgets to build the file dialog.
-        """
-        file_widget = QWidget()
-
-        h_box = QHBoxLayout()
-        file_widget.setLayout(h_box)
-
-        label = QLabel(title)
-        h_box.addWidget(label)
-
-        self.file_entry = QLineEdit()
-        h_box.addWidget(self.file_entry)
-
-        button = QPushButton(text="...")
-        h_box.addWidget(button)
-
-        button.clicked.connect(self.choose_file)
-
-        return file_widget
-
-    def choose_file(self):
-        """
-        This method opens a file dialog and fills the selected file into
-        the file entry in the GUI.
-        """
-        # TODO: use last opened folder as target directory
-        filename, _ = QFileDialog.getOpenFileName(self)
-        self.file_entry.setText(filename)
-
-    def set_track_label(self, label: str):
+    def load_track(self, file: str):
         """
         Adds the selected label to the track metadata.
         """
-        print("TODO: set the label on the selected track")
+        # TODO: load track object
+        print(f"TODO: set the label on the selected track - got file: {file}")
 
 
 def show_main_window():
