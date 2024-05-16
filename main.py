@@ -36,8 +36,7 @@ def get_paths(path: str) -> List[Path]:
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print(
-            "You need to specify a specific file " +
-            "or a directory containing mp3s!"
+            "You need to specify a specific file " + "or a directory containing mp3s!"
         )
         sys.exit(1)
 
