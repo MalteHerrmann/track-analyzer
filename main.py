@@ -44,7 +44,6 @@ if __name__ == "__main__":
 
     else:
         print(
-            "You need to specify a specific file " +
-            "or a directory containing mp3s!"
+            "You need to specify a specific file " + "or a directory containing mp3s!"
         )
         sys.exit(1)
