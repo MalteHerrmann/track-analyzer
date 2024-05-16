@@ -60,7 +60,9 @@ class MainWindow(QMainWindow):
         genre_selector.addItems(self.available_tags.keys())
         layout.addWidget(genre_selector)
 
-        genre_selector.currentTextChanged.connect(lambda x: self.tag_list.update_tags(x))
+        genre_selector.currentTextChanged.connect(
+            lambda x: self.tag_list.update_tags(x)
+        )
 
         self.tag_list = TagList(self.available_tags, self.selected_genre)
         layout.addWidget(self.tag_list)

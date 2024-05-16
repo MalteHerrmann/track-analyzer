@@ -24,8 +24,8 @@ class TagList(QWidget):
         """
         if self.selected_genre not in self.available_tags:
             raise ValueError(
-                f"genre not found in configuration: {self.selected_genre}\n" +
-                f"available genres: {self.available_tags.keys()}"
+                f"genre not found in configuration: {self.selected_genre}\n"
+                + f"available genres: {self.available_tags.keys()}"
             )
 
         for tag in self.available_tags[self.selected_genre]:
