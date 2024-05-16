@@ -16,3 +16,9 @@ In the directory case, all audio files on the corresponding root level are extra
 ```bash
 python3 main.py PATH
 ```
+
+When no further arguments are passed, the GUI mode is executed.
+
+```bash
+python3 main.py
+```

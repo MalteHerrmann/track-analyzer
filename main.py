@@ -6,16 +6,15 @@ which is a common operation when managing my Traktor DJ tracks library.
 import os
 import sys
 from pathlib import Path
-from typing import List
 
-from metadata import adjust_metadata
+from audio import adjust_metadata
+from gui import show_main_window
 
 
-def get_paths(path: str) -> List[Path]:
+def get_paths(path: str) -> list[Path]:
     """
     Returns a list of paths from the given arguments.
     """
-
     if not os.path.exists(path):
         print(f"Given path does not exist: {path}")
         return []
@@ -34,13 +33,17 @@ def get_paths(path: str) -> List[Path]:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) == 1:
+        show_main_window()
+
+    elif len(sys.argv) == 2:
+        files = get_paths(sys.argv[1])
+        for file in files:
+            print("processing file: ", file)
+            adjust_metadata(file, comments=[""], genre="House")
+
+    else:
         print(
             "You need to specify a specific file " + "or a directory containing mp3s!"
         )
         sys.exit(1)
-
-    files = get_paths(sys.argv[1])
-    for file in files:
-        print("processing file: ", file)
-        adjust_metadata(file, comments="", genre="House")
