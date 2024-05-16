@@ -85,6 +85,7 @@ class MainWindow(QMainWindow):
         print(f"Selected tags: {self.tag_list.get_selected_tags()}")
         if self.loaded_file is not None:
             self.loaded_file.set_tags(self.tag_list.get_selected_tags())
+            self.loaded_file.save()
 
 
 def show_main_window():
