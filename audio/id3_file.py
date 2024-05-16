@@ -1,7 +1,6 @@
 import os
 import re
 from pathlib import Path
-from typing import List
 
 import eyed3
 
@@ -34,7 +33,7 @@ class ID3File:
 
         self.id3_file.tag.save()
 
-    def get_comments(self) -> List[str]:
+    def get_comments(self) -> list[str]:
         """
         Returns the comments field from the ID3 metadata.
         """
@@ -44,11 +43,24 @@ class ID3File:
 
         return re.split(r"\s|,", comments.text)
 
-    def set_tags(self, tags: List[str]):
+    def get_tags(self) -> list[str]:
+        """
+        Returns the tags from the comment field of the ID3 tag.
+        """
+        tags = []
+        for comment in self.get_comments():
+            if comment[0] != "#":
+                print(f"found non-tag comment (not starting with #): {comment}")
+                continue
+            tags.append(comment[1:])
+
+        return tags
+
+    def set_tags(self, tags: list[str]):
         """
         Sets the tags in the comment field of the ID3 tag.
         """
-        if self.get_comments() != tags:
+        if self.get_tags() != tags:
             self.id3_file.tag.comments.set(" ".join(tags))
             self.dirty = True
 

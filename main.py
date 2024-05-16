@@ -6,13 +6,12 @@ which is a common operation when managing my Traktor DJ tracks library.
 import os
 import sys
 from pathlib import Path
-from typing import List
 
-from audio.metadata import adjust_metadata
-from gui.main_window import show_main_window
+from audio import adjust_metadata
+from gui import show_main_window
 
 
-def get_paths(path: str) -> List[Path]:
+def get_paths(path: str) -> list[Path]:
     """
     Returns a list of paths from the given arguments.
     """

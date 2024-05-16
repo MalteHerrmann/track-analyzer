@@ -1,11 +1,10 @@
 import os
 from pathlib import Path
-from typing import List
 
 from audio.id3_file import ID3File
 
 
-def adjust_metadata(path: Path, comments: List[str], genre: str) -> None:
+def adjust_metadata(path: Path, comments: list[str], genre: str) -> None:
     """
     Adjusts the metadata of the given MP3 file,
     in case it is not already defined.
