@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton
+from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget
 
 
 class TagList(QWidget):

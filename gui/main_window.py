@@ -11,13 +11,7 @@ from gui.genre_selector import GenreSelector
 from gui.tag_list import TagList
 from gui.track_list import TrackList
 
-from PyQt5.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QPushButton,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
 
 
 class MainWindow(QMainWindow):
@@ -28,8 +22,8 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.loaded_file: ID3File | None = None
-        self.tag_list: TagList | None = None
+        self.loaded_file: ID3File
+        self.tag_list: TagList
 
         self.available_tags: dict[str, list[str]] = load_available_tags()
         self.selected_genre: str = list(self.available_tags.keys())[0]
@@ -67,7 +61,9 @@ class MainWindow(QMainWindow):
         # Add interactivity for GUI elements
 
         # Update track list when changing directory
-        selected_dir_widget.dir_entry.textChanged.connect(lambda x: track_list.update_track_list(Path(x)))
+        selected_dir_widget.dir_entry.textChanged.connect(
+            lambda x: track_list.update_track_list(Path(x))
+        )
         # Load track when selecting from list
         track_list.listbox.itemClicked.connect(lambda x: self.load_track(x.text()))
         # Update available tags when changing genre
