@@ -6,9 +6,10 @@ from pathlib import Path
 
 from audio import ID3File
 from config import load_available_tags
-from gui.file_dialog import FileDialog
-from gui.tag_list import TagList
+from gui.file_dialog import DirDialog
 from gui.genre_selector import GenreSelector
+from gui.tag_list import TagList
+from gui.track_list import TrackList
 
 from PyQt5.QtWidgets import (
     QApplication,
@@ -47,21 +48,14 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
         main_widget.setLayout(layout)
 
-        file_dialog_widget = FileDialog("")
-        layout.addWidget(file_dialog_widget)
+        selected_dir_widget = DirDialog("")
+        layout.addWidget(selected_dir_widget)
 
-        button = QPushButton("Load Track")
-        layout.addWidget(button)
+        track_list = TrackList()
+        layout.addWidget(track_list)
 
-        button.clicked.connect(lambda x: self.load_track(file_dialog_widget.file))
-
-        # TODO: add listbox for available genres
         genre_selector = GenreSelector(self.available_tags, self.selected_genre)
         layout.addWidget(genre_selector)
-
-        genre_selector.combobox.currentTextChanged.connect(
-            lambda x: self.tag_list.update_tags(x)
-        )
 
         self.tag_list = TagList(self.available_tags, self.selected_genre)
         layout.addWidget(self.tag_list)
@@ -69,14 +63,24 @@ class MainWindow(QMainWindow):
         apply_button = QPushButton("Apply")
         layout.addWidget(apply_button)
 
+        # ----------------------------------------
+        # Add interactivity for GUI elements
+
+        # Update track list when changing directory
+        selected_dir_widget.dir_entry.textChanged.connect(lambda x: track_list.update_track_list(Path(x)))
+        # Load track when selecting from list
+        track_list.listbox.itemClicked.connect(lambda x: self.load_track(x.text()))
+        # Update available tags when changing genre
+        genre_selector.combobox.currentTextChanged.connect(
+            lambda x: self.tag_list.update_tags(x)
+        )
+        # Apply changes upon button press
         apply_button.clicked.connect(self.apply)
 
     def load_track(self, file: str):
         """
         Adds the selected label to the track metadata.
         """
-        # TODO: load track object
-        print(f"TODO: set the label on the selected track - got file: {file}")
         self.loaded_file = ID3File(Path(file))
         self.tag_list.set_selected_tags(self.loaded_file.get_tags())
 

@@ -13,25 +13,25 @@ from PyQt5.QtWidgets import (
 )
 
 
-class FileDialog(QWidget):
+class DirDialog(QWidget):
     """
-    Creates a widget to select a file.
+    Creates a widget to select a directory.
     """
 
     def __init__(self, title: str):
         super().__init__()
 
         self.title = title
-        self.file: str = ""
+        self.dir: str = ""
 
-        self.file_entry: QLineEdit
+        self.dir_entry: QLineEdit
         self.button: QPushButton
 
         self.create_widget()
 
     def create_widget(self):
         """
-        Creates the widget to select a file.
+        Creates the widget to select a directory.
         """
         h_box = QHBoxLayout()
         self.setLayout(h_box)
@@ -40,22 +40,22 @@ class FileDialog(QWidget):
             label = QLabel(self.title)
             h_box.addWidget(label)
 
-        self.file_entry = QLineEdit()
-        h_box.addWidget(self.file_entry)
+        self.dir_entry = QLineEdit()
+        h_box.addWidget(self.dir_entry)
 
         self.button = QPushButton("...")
         h_box.addWidget(self.button)
 
-        self.button.clicked.connect(self.select_file)
+        self.button.clicked.connect(self.select_dir)
 
-    def select_file(self):
+    def select_dir(self):
         """
-        Opens a file dialog to select a file.
+        Opens a file dialog to select a directory.
         """
-        self.file, _ = QFileDialog.getOpenFileName(
+        self.dir = QFileDialog.getExistingDirectory(
             self,
             self.title,
             "",
-            "MP3 Files (*.mp3);;All Files (*.*)",
+            QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks,
         )
-        self.file_entry.setText(self.file)
+        self.dir_entry.setText(self.dir)

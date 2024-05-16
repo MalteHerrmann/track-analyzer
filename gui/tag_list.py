@@ -57,9 +57,10 @@ class TagList(QWidget):
         """
         for tag in tags:
             if tag not in self.available_tags[self.selected_genre]:
-                # TODO: handle this gracefully? maybe give option to add with another pop-up?
                 raise ValueError(
                     f"tag not found in available tags: {tag}\navailable tags: {self.available_tags}"
                 )
 
-            self.buttons[tag].setChecked(True)
+        for available_tag in self.available_tags[self.selected_genre]:
+            is_selected = available_tag in tags
+            self.buttons[available_tag].setChecked(is_selected)
