@@ -41,7 +41,7 @@ if __name__ == "__main__":
         files = get_paths(sys.argv[1])
         for file in files:
             print("processing file: ", file)
-            adjust_metadata(file, comments="", genre="House")
+            adjust_metadata(file, comments=[""], genre="House")
 
     else:
         print(

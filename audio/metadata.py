@@ -1,35 +1,19 @@
 import os
 from pathlib import Path
+from typing import List
 
-import eyed3
-
-
-def set_comments(mp3_file, comments: str) -> None:
-    """
-    Helper function to set the comments field on a given MP3 file.
-    """
-
-    mp3_file.tag.comments.set(comments)
+from audio.id3_file import ID3File
 
 
-def get_comments(mp3_file) -> str | None:
-    """
-    Helper function to return the comments field from the given MP3 file.
-    """
-
-    comments = mp3_file.tag.comments.get("")
-    return None if comments is None else comments.text
-
-
-def adjust_metadata(path: Path, comments: str, genre: str) -> None:
+def adjust_metadata(path: Path, comments: List[str], genre: str) -> None:
     """
     Adjusts the metadata of the given MP3 file,
     in case it is not already defined.
-    """
 
-    mp3_file = eyed3.load(path)
-    if mp3_file is None:
-        raise ValueError("Could not load the MP3 file.")
+    Useful tool to assign title and artist when the syntax of the filename
+    is "[ARTIST] - [TITLE].mp3".
+    """
+    mp3_file = ID3File(path)
 
     filename = os.path.splitext(path.name)[0]
     split_name = filename.split(" - ")
@@ -37,32 +21,26 @@ def adjust_metadata(path: Path, comments: str, genre: str) -> None:
         raise ValueError(f"Unexpected filename syntax: {path.name}")
 
     artist, title = split_name
-    file_adjusted = False
 
-    if mp3_file.tag.artist is None:
-        mp3_file.tag.artist = artist
-        file_adjusted = True
+    if mp3_file.get_artist() is None:
+        mp3_file.set_artist(artist)
     else:
-        print(f"Artist already filled: {mp3_file.tag.artist}")
+        print(f"Artist already filled: {mp3_file.get_artist()}")
 
-    if mp3_file.tag.title is None:
-        mp3_file.tag.title = title
-        file_adjusted = True
+    if mp3_file.get_title() is None:
+        mp3_file.set_title(title)
     else:
-        print(f"Title already filled: {mp3_file.tag.title}")
+        print(f"Title already filled: {mp3_file.get_title()}")
 
-    available_comments = get_comments(mp3_file)
-    if available_comments is None:
-        set_comments(mp3_file, comments)
-        file_adjusted = True
+    available_comments = mp3_file.get_comments()
+    if available_comments is None or available_comments == []:
+        mp3_file.set_tags(comments)
     else:
         print(f"Comments already filled: {available_comments}")
 
-    if mp3_file.tag.genre is None:
-        mp3_file.tag.genre = genre
-        file_adjusted = True
+    if mp3_file.get_genre() is None:
+        mp3_file.set_genre(genre)
     else:
-        print(f"Genre already filled: {mp3_file.tag.genre}")
+        print(f"Genre already filled: {mp3_file.get_genre()}")
 
-    if file_adjusted:
-        mp3_file.tag.save()
+    mp3_file.save()
