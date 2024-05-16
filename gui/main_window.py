@@ -8,10 +8,10 @@ from audio import ID3File
 from config import load_available_tags
 from gui.file_dialog import FileDialog
 from gui.tag_list import TagList
+from gui.genre_selector import GenreSelector
 
 from PyQt5.QtWidgets import (
     QApplication,
-    QComboBox,
     QMainWindow,
     QPushButton,
     QVBoxLayout,
@@ -56,11 +56,10 @@ class MainWindow(QMainWindow):
         button.clicked.connect(lambda x: self.load_track(file_dialog_widget.file))
 
         # TODO: add listbox for available genres
-        genre_selector = QComboBox()
-        genre_selector.addItems(self.available_tags.keys())
+        genre_selector = GenreSelector(self.available_tags, self.selected_genre)
         layout.addWidget(genre_selector)
 
-        genre_selector.currentTextChanged.connect(
+        genre_selector.combobox.currentTextChanged.connect(
             lambda x: self.tag_list.update_tags(x)
         )
 
