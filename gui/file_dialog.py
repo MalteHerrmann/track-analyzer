@@ -4,12 +4,12 @@ used to create a widget that is used to select the file to be analyzed.
 """
 
 from PyQt5.QtWidgets import (
-    QWidget,
+    QFileDialog,
     QHBoxLayout,
     QLabel,
     QLineEdit,
     QPushButton,
-    QFileDialog,
+    QWidget,
 )
 
 

@@ -3,19 +3,20 @@ This file contains the logic to define the main window of the application.
 """
 
 from pathlib import Path
-from PyQt5.QtWidgets import (
-    QApplication,
-    QComboBox,
-    QMainWindow,
-    QWidget,
-    QVBoxLayout,
-    QPushButton,
-)
 
 from audio import ID3File
 from config import load_available_tags
 from gui.file_dialog import FileDialog
 from gui.tag_list import TagList
+
+from PyQt5.QtWidgets import (
+    QApplication,
+    QComboBox,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
 
 
 class MainWindow(QMainWindow):
