@@ -13,7 +13,7 @@ def load_available_tags() -> dict[str, list[str]]:
     """
 
     config_path = Path(__file__).parent / "config.json"
-    with open(config_path) as config_file:
+    with open(config_path, encoding="utf-8") as config_file:
         config = json.load(config_file)
 
     return config

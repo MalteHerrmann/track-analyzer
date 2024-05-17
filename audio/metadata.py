@@ -1,3 +1,7 @@
+"""
+This file provides utilities to adjust the metadata of ID3 files.
+"""
+
 import os
 from pathlib import Path
 

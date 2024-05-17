@@ -1,0 +1,23 @@
+[tool.pylint.main]
+# Files or directories matching the regular expression patterns are skipped. The
+# regex matches against base names, not paths. The default value ignores Emacs
+# file locks
+ignore-patterns = ["test_.*\.py$"]
+# Do not pickle collected data for later comparisons.
+persistent = false
+
+# When enabled, pylint would attempt to guess common misconfiguration and emit
+# user-friendly hints instead of false-positive error messages.
+suggestion-mode = true
+
+[tool.pylint.design]
+# Maximum number of arguments for function / method.
+max-args = 3
+
+# Minimum number of public methods for a class (see R0903).
+min-public-methods = -1
+
+[tool.pylint.basic]
+# Minimum line length for functions/classes that require docstrings, shorter ones
+# are exempt.
+docstring-min-length = -1
