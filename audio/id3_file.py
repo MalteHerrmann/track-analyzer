@@ -1,3 +1,8 @@
+"""
+This file contains the ID3File class, which enables accessing and
+adjusting the metadata of audio files with the ID3 metadata standard.
+"""
+
 import os
 import re
 from pathlib import Path
@@ -17,7 +22,8 @@ class ID3File:
 
         if not os.path.exists(self.filepath):
             raise FileNotFoundError(f"path does not exist: {self.filepath}")
-        elif not os.path.isfile(self.filepath):
+
+        if not os.path.isfile(self.filepath):
             raise FileNotFoundError(f"path is not a file: {self.filepath}")
 
         self.id3_file = eyed3.load(self.filepath)

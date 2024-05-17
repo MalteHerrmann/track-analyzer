@@ -1,5 +1,9 @@
-from pathlib import Path
+"""
+This file contains the track list widget that shows
+the available audio files with a given directory.
+"""
 
+from pathlib import Path
 from PyQt5.QtWidgets import QListWidget, QPushButton, QVBoxLayout, QWidget
 
 

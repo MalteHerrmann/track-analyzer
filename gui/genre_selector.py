@@ -1,3 +1,8 @@
+"""
+This file contains the genre selector widget,
+which enables switching genres for the tag list.
+"""
+
 from PyQt5.QtWidgets import QComboBox, QHBoxLayout, QLabel, QWidget
 
 

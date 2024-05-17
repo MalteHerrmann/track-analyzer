@@ -3,7 +3,6 @@ This file contains the logic to define the main window of the application.
 """
 
 from pathlib import Path
-
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
 
 from audio import ID3File

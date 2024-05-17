@@ -1,3 +1,9 @@
+"""
+This file contains the tag list widget, which creates
+selectable buttons for the available tags that can be assigned
+to a track.
+"""
+
 from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget
 
 
