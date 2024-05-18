@@ -3,41 +3,9 @@ This file contains the media player, which enables playback
 of the selected audio files.
 """
 
-from time import sleep
-from PyQt5.QtCore import QObject, Qt, QThread, QUrl
-from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer, QAudio
+from PyQt5.QtCore import Qt, QUrl
+from PyQt5.QtMultimedia import QAudio, QMediaContent, QMediaPlayer
 from PyQt5.QtWidgets import QHBoxLayout, QPushButton, QSlider, QVBoxLayout, QWidget
-
-
-class SliderWorker(QObject):
-    """
-    Worker class for the slider.
-    """
-
-    pass
-
-    # def __init__(self, player: QMediaPlayer):
-    #     super().__init__()
-    #     self.player = player
-    #
-    # def set_position(self, position: int):
-    #     """
-    #     Sets the position of the audio file.
-    #     """
-    #     self.player.setPosition(self.calculate_position(position))
-    #
-    # def calculate_position(self, position: int) -> int:
-    #     """
-    #     Calculates the position of the audio file from the normalized position
-    #     value (0 < x < 100).
-    #     """
-    #     return round(position * self.player.duration() / 100)
-    #
-    # def calculate_normalized_position(self) -> int:
-    #     """
-    #     Calculates the normalized position of the audio file.
-    #     """
-    #     return round(self.player.position() * 100 / self.player.duration())
 
 
 class AudioPlayer(QWidget):
@@ -67,6 +35,7 @@ class AudioPlayer(QWidget):
 
         self.player = QMediaPlayer()
         self.player.setAudioRole(QAudio.MusicRole)
+        self.media_content = QMediaContent()
 
         stop_button.clicked.connect(self.stop)
         play_button.clicked.connect(self.play)

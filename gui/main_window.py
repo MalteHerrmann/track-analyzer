@@ -71,9 +71,7 @@ class MainWindow(QMainWindow):
         track_list.listbox.itemClicked.connect(lambda x: self.load_track(x.text()))
         track_list.listbox.itemClicked.connect(lambda x: player.load_track(x.text()))
         # Update available tags when changing genre
-        genre_selector.combobox.currentTextChanged.connect(
-            lambda x: self.tag_list.update_tags(x)
-        )
+        genre_selector.combobox.currentTextChanged.connect(self.tag_list.update_tags)
         # Apply changes upon button press
         apply_button.clicked.connect(self.apply)
 
