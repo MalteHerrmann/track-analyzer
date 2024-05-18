@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout,
 
 from audio import ID3File
 from config import load_available_tags
+from gui.audio import AudioPlayer
 from gui.file_dialog import DirDialog
 from gui.genre_selector import GenreSelector
 from gui.tag_list import TagList
@@ -47,6 +48,9 @@ class MainWindow(QMainWindow):
         track_list = TrackList()
         layout.addWidget(track_list)
 
+        player = AudioPlayer()
+        layout.addWidget(player)
+
         genre_selector = GenreSelector(self.available_tags, self.selected_genre)
         layout.addWidget(genre_selector)
 
@@ -65,6 +69,7 @@ class MainWindow(QMainWindow):
         )
         # Load track when selecting from list
         track_list.listbox.itemClicked.connect(lambda x: self.load_track(x.text()))
+        track_list.listbox.itemClicked.connect(lambda x: player.load_track(x.text()))
         # Update available tags when changing genre
         genre_selector.combobox.currentTextChanged.connect(
             lambda x: self.tag_list.update_tags(x)
