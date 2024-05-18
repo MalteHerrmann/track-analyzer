@@ -13,6 +13,7 @@ class SliderWorker(QObject):
     """
     Worker class for the slider.
     """
+
     pass
 
     # def __init__(self, player: QMediaPlayer):
