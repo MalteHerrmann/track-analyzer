@@ -36,10 +36,11 @@ class AudioPlayer(QWidget):
         self.player = QMediaPlayer()
         self.player.setAudioRole(QAudio.MusicRole)
         self.media_content = QMediaContent()
+        self.player.positionChanged.connect(self.set_slider_position)
 
         stop_button.clicked.connect(self.stop)
         play_button.clicked.connect(self.play)
-        self.slider.valueChanged.connect(self.set_position)
+        self.slider.sliderReleased.connect(self.update_position)
 
     def load_track(self, track: str):
         """
@@ -60,11 +61,19 @@ class AudioPlayer(QWidget):
         """
         self.player.stop()
 
-    def set_position(self, position: int):
+    def update_position(self):
         """
-        Sets the position of the audio file.
+        Updates the position of the audio file from the position of the slider.
         """
+        position = self.slider.value()
         self.player.setPosition(self.calculate_position(position))
+
+    def set_slider_position(self, position: int):
+        """
+        Adjusts the slider position according to the audio file position.
+        """
+        if not self.slider.isSliderDown():
+            self.slider.setValue(self.calculate_normalized_position(position))
 
     def calculate_position(self, position: int) -> int:
         """
@@ -73,8 +82,12 @@ class AudioPlayer(QWidget):
         """
         return round(position * self.player.duration() / 100)
 
-    def calculate_normalized_position(self) -> int:
+    def calculate_normalized_position(self, position: int) -> int:
         """
         Calculates the normalized position of the audio file.
         """
-        return round(self.player.position() * 100 / self.player.duration())
+        duration = self.player.duration()
+        if duration == 0:
+            return 0
+
+        return round(position * 100 / duration)
