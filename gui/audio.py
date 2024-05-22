@@ -73,7 +73,7 @@ class AudioPlayer(QWidget):
         Adjusts the slider position according to the audio file position.
         """
         if not self.slider.isSliderDown():
-            self.slider.setValue(self.calculate_normalized_position())
+            self.slider.setValue(self.calculate_normalized_position(position))
 
     def calculate_position(self, position: int) -> int:
         """
@@ -82,11 +82,11 @@ class AudioPlayer(QWidget):
         """
         return round(position * self.player.duration() / 100)
 
-    def calculate_normalized_position(self) -> int:
+    def calculate_normalized_position(self, position: int) -> int:
         """
         Calculates the normalized position of the audio file.
         """
         if self.player.duration() == 0:
             return 0
 
-        return round(self.player.position() * 100 / self.player.duration())
+        return round(position * 100 / self.player.duration())
