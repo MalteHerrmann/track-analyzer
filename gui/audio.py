@@ -86,7 +86,8 @@ class AudioPlayer(QWidget):
         """
         Calculates the normalized position of the audio file.
         """
-        if self.player.duration() == 0:
+        duration = self.player.duration()
+        if duration == 0:
             return 0
 
-        return round(position * 100 / self.player.duration())
+        return round(position * 100 / duration)
