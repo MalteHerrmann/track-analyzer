@@ -14,8 +14,8 @@ def track_with_metadata() -> ID3File:
 
 
 def test_getters(track_with_metadata):
-    assert track_with_metadata.get_comments() == ["#I", "#Garage", "#4x4"]
-    assert track_with_metadata.get_tags() == ["Garage", "4x4"]
+    assert track_with_metadata.get_comments() == ["#4x4", "#Garage", "#I"]
+    assert track_with_metadata.get_tags() == ["4x4", "Garage", "I"]
     assert track_with_metadata.get_title() == "Cycles (Oppidan Remix)"
     assert track_with_metadata.get_artist() == "33 Below"
     assert track_with_metadata.get_genre() == "House"
