@@ -12,6 +12,7 @@ from gui.file_dialog import DirDialog
 from gui.genre_selector import GenreSelector
 from gui.tag_list import TagList
 from gui.track_list import TrackList
+from gui.utility_tags import split_utility_tags, UtilityTags
 
 
 class MainWindow(QMainWindow):
@@ -24,6 +25,7 @@ class MainWindow(QMainWindow):
 
         self.loaded_file: ID3File
         self.tag_list: TagList
+        self.utility_tags: UtilityTags
 
         self.available_tags: dict[str, list[str]] = load_available_tags()
         self.selected_genre: str = list(self.available_tags.keys())[0]
@@ -54,6 +56,9 @@ class MainWindow(QMainWindow):
         genre_selector = GenreSelector(self.available_tags, self.selected_genre)
         layout.addWidget(genre_selector)
 
+        self.utility_tags = UtilityTags()
+        layout.addWidget(self.utility_tags)
+
         self.tag_list = TagList(self.available_tags, self.selected_genre)
         layout.addWidget(self.tag_list)
 
@@ -80,15 +85,18 @@ class MainWindow(QMainWindow):
         Adds the selected label to the track metadata.
         """
         self.loaded_file = ID3File(Path(file))
-        self.tag_list.set_selected_tags(self.loaded_file.get_tags())
+        (genre_tags, utility_tags) = split_utility_tags(self.loaded_file.get_tags())
+        self.tag_list.set_selected_tags(genre_tags)
+        self.utility_tags.set_selected_tags(utility_tags)
 
     def apply(self):
         """
         Applies the made changes to the file.
         """
-        print(f"Selected tags: {self.tag_list.get_selected_tags()}")
         if self.loaded_file is not None:
-            self.loaded_file.set_tags(self.tag_list.get_selected_tags())
+            genre_tags = self.tag_list.get_selected_tags()
+            utility_tags = self.utility_tags.get_selected_tags()
+            self.loaded_file.set_tags(genre_tags + utility_tags)
             self.loaded_file.save()
 
 

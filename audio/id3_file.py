@@ -67,6 +67,7 @@ class ID3File:
         Sets the tags in the comment field of the ID3 tag.
         """
         if self.get_tags() != tags:
+            print("tags to join: ", tags, type(tags))
             self.id3_file.tag.comments.set(" ".join(tags))
             self.dirty = True
 
