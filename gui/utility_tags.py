@@ -1,3 +1,9 @@
+"""
+This file defines a class to enable selecting utility tags,
+that are not genre-specific.
+"""
+
+
 from PyQt5.QtWidgets import QPushButton, QHBoxLayout, QWidget
 
 
@@ -37,7 +43,8 @@ class UtilityTags(QWidget):
         for tag in tags:
             if tag not in UTILITY_TAGS:
                 raise ValueError(
-                    f"tag not found in utility tags: {tag}\navailable utility tags: {UTILITY_TAGS}"
+                    f"tag not found in utility tags: {tag}\n"
+                    + f"available utility tags: {UTILITY_TAGS}"
                 )
 
         for available_tag in UTILITY_TAGS:
