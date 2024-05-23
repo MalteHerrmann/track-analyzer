@@ -64,7 +64,8 @@ class TagList(QWidget):
         for tag in tags:
             if tag not in self.available_tags[self.selected_genre]:
                 raise ValueError(
-                    f"tag not found in available tags: {tag}\navailable tags: {self.available_tags}"
+                    f"tag not found in available tags: {tag}"
+                    + f"\navailable tags: {self.available_tags}"
                 )
 
         for available_tag in self.available_tags[self.selected_genre]:

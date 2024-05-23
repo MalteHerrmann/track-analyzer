@@ -4,6 +4,7 @@
 
 ### Features
 
+- [#17](https://github.com/MalteHerrmann/track-analyzer/pull/17) Save selected genre to track and improve GUI handling.
 - [#16](https://github.com/MalteHerrmann/track-analyzer/pull/16) Add widget for utility tags.
 - [#13](https://github.com/MalteHerrmann/track-analyzer/pull/13) Add basic player controls.
 - [#12](https://github.com/MalteHerrmann/track-analyzer/pull/12) Add list view for folder entries.

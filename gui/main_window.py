@@ -53,7 +53,9 @@ class MainWindow(QMainWindow):
         player = AudioPlayer()
         layout.addWidget(player)
 
-        genre_selector = GenreSelector(self.available_tags, self.selected_genre)
+        genre_selector = GenreSelector(
+            self.available_tags, self.selected_genre
+        )
         layout.addWidget(genre_selector)
 
         self.utility_tags = UtilityTags()
@@ -73,10 +75,14 @@ class MainWindow(QMainWindow):
             lambda x: track_list.update_track_list(Path(x))
         )
         # Load track when selecting from list
-        track_list.listbox.itemClicked.connect(lambda x: self.load_track(x.text()))
-        track_list.listbox.itemClicked.connect(lambda x: player.load_track(x.text()))
+        track_list.listbox.itemClicked.connect(
+            lambda x: self.load_track(x.text())
+        )
+        track_list.listbox.itemClicked.connect(
+            lambda x: player.load_track(x.text())
+        )
         # Update available tags when changing genre
-        genre_selector.combobox.currentTextChanged.connect(self.tag_list.update_tags)
+        genre_selector.combobox.currentTextChanged.connect(self.update_genre)
         # Apply changes upon button press
         apply_button.clicked.connect(self.apply)
 
@@ -85,7 +91,18 @@ class MainWindow(QMainWindow):
         Adds the selected label to the track metadata.
         """
         self.loaded_file = ID3File(Path(file))
-        (genre_tags, utility_tags) = split_utility_tags(self.loaded_file.get_tags())
+        self.update_genre(self.selected_genre)
+
+    def update_genre(self, genre: str):
+        """
+        When updating the genre, the available genre tags are adjusted
+        and the corresponding buttons are checked for the loaded track.
+        """
+        self.selected_genre = genre
+        self.tag_list.update_tags(genre)
+        (genre_tags, utility_tags) = split_utility_tags(
+            self.loaded_file.get_tags()
+        )
         self.tag_list.set_selected_tags(genre_tags)
         self.utility_tags.set_selected_tags(utility_tags)
 
@@ -97,6 +114,7 @@ class MainWindow(QMainWindow):
             genre_tags = self.tag_list.get_selected_tags()
             utility_tags = self.utility_tags.get_selected_tags()
             self.loaded_file.set_tags(genre_tags + utility_tags)
+            self.loaded_file.set_genre(self.tag_list.selected_genre)
             self.loaded_file.save()
 
 
