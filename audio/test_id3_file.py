@@ -7,8 +7,7 @@ from audio import ID3File
 @pytest.fixture
 def track_with_metadata() -> ID3File:
     id3_file = ID3File(
-        Path(__file__).parent / "testdata" /
-        "artist - title (with metadata).mp3"
+        Path(__file__).parent / "testdata" / "artist - title (with metadata).mp3"
     )
     return id3_file
 
