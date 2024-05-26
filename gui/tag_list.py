@@ -4,7 +4,10 @@ selectable buttons for the available tags that can be assigned
 to a track.
 """
 
-from PyQt5.QtWidgets import QPushButton, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QPushButton, QGridLayout, QWidget
+
+
+N_TAGS_PER_ROW = 4
 
 
 class TagList(QWidget):
@@ -19,7 +22,7 @@ class TagList(QWidget):
         self.selected_genre = selected_genre
         self.buttons: dict[str, QPushButton] = {}
 
-        self.layout = QVBoxLayout()
+        self.layout = QGridLayout()
         self.setLayout(self.layout)
 
         self.create_available_tags()
@@ -34,10 +37,16 @@ class TagList(QWidget):
                 + f"available genres: {self.available_tags.keys()}"
             )
 
+        idx_x = -1
+        idx_y = 0
         for tag in self.available_tags[self.selected_genre]:
+            idx_x += 1
+            if idx_x % N_TAGS_PER_ROW == 0:
+                idx_y += 1
+                idx_x = 0
             button = QPushButton(tag)
             button.setCheckable(True)
-            self.layout.addWidget(button)
+            self.layout.addWidget(button, idx_y, idx_x)
             self.buttons[tag] = button
 
     def update_tags(self, genre: str):
