@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QPushButton, QHBoxLayout, QWidget
 
 
 # List of utility tags, that are common across genres.
-UTILITY_TAGS = ["I", "O"]
+UTILITY_TAGS = ["I", "O", "Vocal"]
 
 
 class UtilityTags(QWidget):

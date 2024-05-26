@@ -1,17 +1,21 @@
 {
-    "House": [
-        "House",
-        "Jazzy",
-        "4x4",
-        "Garage",
-        "Modern",
-        "Melancholy",
-        "Peak"
-    ],
-    "Techno": [
-        "Bleepy",
-        "Pushing",
-        "Hard",
-        "Rave"
-    ]
+  "House": [
+    "Modern",
+    "4x4",
+    "Garage",
+    "House",
+    "Jackin",
+    "Disco",
+    "Funk",
+    "Soul",
+    "Classic",
+    "Piano",
+    "Jazzy",
+    "Melancholy",
+    "Peak",
+    "Pushing",
+    "Tech",
+    "Rally"
+  ],
+  "Techno": ["Bleepy", "Pushing", "Hard", "Rave"]
 }
