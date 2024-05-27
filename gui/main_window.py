@@ -25,9 +25,14 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.artist_and_title_widget: ArtistAndTitle
         self.loaded_file: ID3File
         self.tag_list: TagList
         self.utility_tags: UtilityTags
+
+        self.last_assigned_genre: str = ""
+        self.last_assigned_tags: list[str] = []
+        self.last_assigned_utility_tags: list[str] = []
 
         self.available_tags: dict[str, list[str]] = load_available_tags()
         self.selected_genre: str = list(self.available_tags.keys())[0]
@@ -57,6 +62,9 @@ class MainWindow(QMainWindow):
 
         self.artist_and_title_widget = ArtistAndTitle()
         layout.addWidget(self.artist_and_title_widget)
+
+        apply_last_tags_button = QPushButton("Apply Last Tags")
+        layout.addWidget(apply_last_tags_button)
 
         genre_selector = GenreSelector(
             self.available_tags, self.selected_genre
@@ -90,6 +98,8 @@ class MainWindow(QMainWindow):
         genre_selector.combobox.currentTextChanged.connect(self.update_genre)
         # Apply changes upon button press
         apply_button.clicked.connect(self.apply)
+        # Apply last tags upon button press
+        apply_last_tags_button.clicked.connect(self.select_last_tags)
 
     def load_track(self, file: str):
         """
@@ -107,7 +117,7 @@ class MainWindow(QMainWindow):
             return
 
         filename = os.path.split(self.loaded_file.filepath)[1]
-        split_name = re.split(r"\s+-\s+", filename, maxsplit=1)
+        split_name = re.split(r"\s+-\s+", os.path.splitext(filename)[0], maxsplit=1)
         if len(split_name) < 2:
             artist_from_filename = split_name[0]
             title_from_filename = ""
@@ -144,6 +154,18 @@ class MainWindow(QMainWindow):
         self.tag_list.set_selected_tags(genre_tags)
         self.utility_tags.set_selected_tags(utility_tags)
 
+    def select_last_tags(self):
+        """
+        Selects the tags that were last assigned to the loaded file.
+        """
+        if not self.loaded_file or not self.last_assigned_genre:
+            return
+
+        self.tag_list.selected_genre = self.last_assigned_genre
+        self.update_genre(self.last_assigned_genre)
+        self.tag_list.set_selected_tags(self.last_assigned_tags)
+        self.utility_tags.set_selected_tags(self.last_assigned_utility_tags)
+
     def apply(self):
         """
         Applies the made changes to the file.
@@ -158,6 +180,10 @@ class MainWindow(QMainWindow):
         self.loaded_file.set_artist(self.artist_and_title_widget.get_artist())
         self.loaded_file.set_title(self.artist_and_title_widget.get_title())
         self.loaded_file.save()
+
+        self.last_assigned_genre = self.tag_list.selected_genre
+        self.last_assigned_tags = [tag[1:] for tag in genre_tags]  # remove the #
+        self.last_assigned_utility_tags = [tag[1:] for tag in utility_tags]  # remove the #
 
 
 def show_main_window():
