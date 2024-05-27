@@ -4,6 +4,7 @@
 
 ### Features
 
+- [#20](https://github.com/MalteHerrmann/track-analyzer/pull/20) Add button to re-select the last applied tags and genre.
 - [#19](https://github.com/MalteHerrmann/track-analyzer/pull/19) Add logic to set artist and title.
 - [#17](https://github.com/MalteHerrmann/track-analyzer/pull/17) Save selected genre to track and improve GUI handling.
 - [#16](https://github.com/MalteHerrmann/track-analyzer/pull/16) Add widget for utility tags.
