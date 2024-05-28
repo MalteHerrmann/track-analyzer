@@ -15,6 +15,7 @@
 
 ### Improvements
 
+- [#21](https://github.com/MalteHerrmann/track-analyzer/pull/21) Some improvements to GUI interactivity.
 - [#18](https://github.com/MalteHerrmann/track-analyzer/pull/18) Show tags in grid rather than only rows.
 - [#15](https://github.com/MalteHerrmann/track-analyzer/pull/15) Update slider position while track is playing.
 
