@@ -48,6 +48,7 @@ class AudioPlayer(QWidget):
         """
         self.media_content = QMediaContent(QUrl.fromLocalFile(track))
         self.player.setMedia(self.media_content)
+        self.play()
 
     def play(self):
         """

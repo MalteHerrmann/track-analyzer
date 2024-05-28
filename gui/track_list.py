@@ -27,6 +27,9 @@ class TrackList(QWidget):
         """
         Updates the track list with the contents of the given directory.
         """
+        if not directory.exists():
+            return
+
         self.track_list = [
             str(file)
             for file in directory.iterdir()

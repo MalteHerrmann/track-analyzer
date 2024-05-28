@@ -27,7 +27,9 @@ class MainWindow(QMainWindow):
 
         self.artist_and_title_widget: ArtistAndTitle
         self.loaded_file: ID3File
+        self.player: AudioPlayer
         self.tag_list: TagList
+        self.track_list: TrackList
         self.utility_tags: UtilityTags
 
         self.last_assigned_genre: str = ""
@@ -54,11 +56,11 @@ class MainWindow(QMainWindow):
         selected_dir_widget = DirDialog("")
         layout.addWidget(selected_dir_widget)
 
-        track_list = TrackList()
-        layout.addWidget(track_list)
+        self.track_list = TrackList()
+        layout.addWidget(self.track_list)
 
-        player = AudioPlayer()
-        layout.addWidget(player)
+        self.player = AudioPlayer()
+        layout.addWidget(self.player)
 
         self.artist_and_title_widget = ArtistAndTitle()
         layout.addWidget(self.artist_and_title_widget)
@@ -85,15 +87,10 @@ class MainWindow(QMainWindow):
 
         # Update track list when changing directory
         selected_dir_widget.dir_entry.textChanged.connect(
-            lambda x: track_list.update_track_list(Path(x))
+            lambda x: self.track_list.update_track_list(Path(x))
         )
         # Load track when selecting from list
-        track_list.listbox.itemClicked.connect(
-            lambda x: self.load_track(x.text())
-        )
-        track_list.listbox.itemClicked.connect(
-            lambda x: player.load_track(x.text())
-        )
+        self.track_list.listbox.itemSelectionChanged.connect(self.load_track)
         # Update available tags when changing genre
         genre_selector.combobox.currentTextChanged.connect(self.update_genre)
         # Apply changes upon button press
@@ -101,13 +98,15 @@ class MainWindow(QMainWindow):
         # Apply last tags upon button press
         apply_last_tags_button.clicked.connect(self.select_last_tags)
 
-    def load_track(self, file: str):
+    def load_track(self):
         """
         Adds the selected label to the track metadata.
         """
+        file = self.track_list.listbox.currentItem().text()
         self.loaded_file = ID3File(Path(file))
         self.update_track_info()
         self.update_genre(self.selected_genre)
+        self.player.load_track(file)
 
     def update_track_info(self):
         """
