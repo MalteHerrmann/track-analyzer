@@ -1,0 +1,16 @@
+{
+  "categories": [
+    "audio",
+    "ci",
+    "gui",
+    "test"
+  ],
+  "change_types": {
+    "Bug Fixes": "bug\\s*fixes",
+    "Features": "features",
+    "Improvements": "improvements"
+  },
+  "expected_spellings": {},
+  "legacy_version": null,
+  "target_repo": "https://github.com/MalteHerrmann/track-analyzer"
+}
