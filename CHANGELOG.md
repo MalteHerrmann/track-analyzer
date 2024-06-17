@@ -15,7 +15,7 @@
 
 ### Improvements
 
+- (ci) [#24](https://github.com/MalteHerrmann/track-analyzer/pull/24) Add changelog linter for CI.
 - (gui) [#21](https://github.com/MalteHerrmann/track-analyzer/pull/21) Some improvements to GUI interactivity.
 - (gui) [#18](https://github.com/MalteHerrmann/track-analyzer/pull/18) Show tags in grid rather than only rows.
 - (gui) [#15](https://github.com/MalteHerrmann/track-analyzer/pull/15) Update slider position while track is playing.
-
